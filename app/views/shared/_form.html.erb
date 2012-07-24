@@ -1,0 +1,18 @@
+<%= form_for @user ,:html => { :class => 'well' }  do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.text_field :username, :placeholder => 'Username' , :class => 'span2'%>
+  </p>
+
+  <p>
+    <%= f.text_field :email, :placeholder => 'Email', :class => 'span3' %>
+  </p>
+  <p>
+    <%= f.password_field :password , :placeholder => 'Password', :class => 'span2' %>
+  </p>
+  <p>
+    <%= f.password_field :password_confirmation, :placeholder => 'Confirm Password', :class => 'span2' %>
+  </p>
+  <p><%= f.submit (@user.new_record? ? "Sign up" : "Update"), :class => 'btn' %></p>
+
+<% end %>

@@ -1,0 +1,12 @@
+<%= form_tag sessions_path ,:class => 'well' do %>
+
+  <p>
+    <%= text_field_tag :login, params[:login] , :placeholder => 'Login or email', :class => 'span3' %>
+  </p>
+  <p>
+    <%= password_field_tag :password, nil,:placeholder => 'Password', :class => 'span3' %>
+
+  </p>
+  <p><%= submit_tag "Log in" , class: "btn" %></p>
+<% end %>
+
