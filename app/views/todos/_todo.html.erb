@@ -1,0 +1,10 @@
+<%= content_tag_for(:li, todo) do %>
+   <tr>
+    <td><%= todo.title %></td>
+    <td><%= todo.body %></td>
+    <td><%= todo.done %></td>
+    <td><%= todo.due %></td>
+    <td><%= link_to 'Destroy', todo, method: :delete, data: { confirm: 'Are you sure?' }, :remote => true %></td>
+  </tr>
+<% end %>
+

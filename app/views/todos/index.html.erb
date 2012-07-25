@@ -1,29 +1,9 @@
 <h1>Todo List</h1>
-
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Body</th>
-    <th>Done</th>
-    <th>Due</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @todos.each do |todo| %>
-  <tr>
-    <td><%= todo.title %></td>
-    <td><%= todo.body %></td>
-    <td><%= todo.done %></td>
-    <td><%= todo.due %></td>
-    <td><%= link_to 'Show', todo %></td>
-    <td><%= link_to 'Edit', edit_todo_path(todo) %></td>
-    <td><%= link_to 'Destroy', todo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Todo', new_todo_path %>
+ 
+<div id="todo_form">
+  <%= render 'form' %>
+</div>
+ 
+<ul id="todos">
+  <%= render :partial => @todos.reverse %>
+</ul>

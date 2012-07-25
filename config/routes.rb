@@ -1,5 +1,9 @@
 TestApp::Application.routes.draw do
-  resources :todos
+  resources :sessions
+
+  resources :users
+
+  resources :todos, :posts
 
   root to: 'todos#index'
 
@@ -9,9 +13,7 @@ TestApp::Application.routes.draw do
   match 'login' => 'sessions#new', :as => :login
   match 'todolist' => 'todos#index'
 
-  resources :sessions
 
-  resources :users
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

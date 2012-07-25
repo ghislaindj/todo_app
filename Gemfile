@@ -10,6 +10,9 @@ gem 'bootstrap-sass', '2.0.0'
 #gem 'bcrypt-ruby', '3.0.1'
 gem "bcrypt-ruby", :require => "bcrypt"
 gem 'nifty-generators'
+#gem 'searchlogic'
+gem 'bootstrap-datepicker-rails'
+
 
 group :development, :test do
   #gem 'sqlite3', '1.3.5'

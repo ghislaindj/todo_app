@@ -5,6 +5,8 @@ class TodosController < ApplicationController
   def index
     #@todos = Todo.all
     @todos = current_user.todos
+    @todo = current_user.todos.new
+
 
     respond_to do |format|
       format.html # index.html.erb
@@ -46,12 +48,14 @@ class TodosController < ApplicationController
   # POST /todos.json
   def create
     #@todo = Todo.new(params[:todo])
-    @todo = current_user.todos.create(params[:todo])
+    #@todo = current_user.todos.create(params[:todo])
+    @todo = current_user.todos.new(params[:todo])
 
     respond_to do |format|
       if @todo.save
         format.html { redirect_to @todo, notice: 'Todo was successfully created.' }
         format.json { render json: @todo, status: :created, location: @todo }
+        format.js
       else
         format.html { render action: "new" }
         format.json { render json: @todo.errors, status: :unprocessable_entity }
@@ -86,6 +90,7 @@ class TodosController < ApplicationController
     respond_to do |format|
       format.html { redirect_to todos_url }
       format.json { head :no_content }
+      format.js
     end
   end
 
