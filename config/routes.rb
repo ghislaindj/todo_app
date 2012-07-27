@@ -1,4 +1,6 @@
 TestApp::Application.routes.draw do
+  resources :categories
+
   resources :sessions
 
   resources :users

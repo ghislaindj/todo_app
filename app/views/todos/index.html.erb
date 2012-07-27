@@ -1,9 +1,32 @@
 <h1>Todo List</h1>
- 
-<div id="todo_form">
+<br><br><br>
+
+<a class="btn" data-toggle="modal" href="#myModal" >Add a new task</a>
+
+<div class="modal hide" id="myModal">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3>Add a new Task</h3>
+  </div>
+  <div class="modal-body">
+    <div id="todo_form" class="hidden">
   <%= render 'form' %>
 </div>
+  </div>
+</div>
+
+
+<br><br><br>
  
-<ul id="todos">
-  <%= render :partial => @todos.reverse %>
-</ul>
+<table class="table table-striped" id="todos">
+<thead>
+    <th>Category</th>
+    <th>Task</th>
+    <th>Due Date</th>
+    <th>Is it done ?</th>
+ </thead>
+ <tbody>
+<%= render :partial => @todos %>
+</tbody>
+</table>
+<%= will_paginate %>

@@ -13,6 +13,10 @@ gem 'nifty-generators'
 #gem 'searchlogic'
 gem 'bootstrap-datepicker-rails'
 
+gem 'will_paginate'
+gem 'bootstrap-will_paginate'
+gem 'rails3-jquery-autocomplete'
+
 
 group :development, :test do
   #gem 'sqlite3', '1.3.5'

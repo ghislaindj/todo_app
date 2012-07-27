@@ -1,10 +1,17 @@
-<%= content_tag_for(:li, todo) do %>
-   <tr>
-    <td><%= todo.title %></td>
+<%= content_tag_for(:tr, todo) do %>
+	<% if todo.category_id? %>
+        <td><%= todo.category.name %></td>
+    <% else %>
+    	<td>Others</td>
+    <% end %>
     <td><%= todo.body %></td>
-    <td><%= todo.done %></td>
     <td><%= todo.due %></td>
+    <td><%= todo.done %></td>
+    <% if todo.done? %>
+        <td><input type="checkbox" checked/></td>
+    <% else %>
+    	<td><input type="checkbox"/></td>
+    <% end %>
     <td><%= link_to 'Destroy', todo, method: :delete, data: { confirm: 'Are you sure?' }, :remote => true %></td>
-  </tr>
 <% end %>
 

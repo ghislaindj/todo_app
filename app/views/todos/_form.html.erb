@@ -13,10 +13,11 @@
   <% end %>
 
   <p>
-    <%= f.text_field :title, :placeholder => 'Titre' , :class => 'span2'%>
     <%= f.text_field :body, :placeholder => 'Task', :class => 'span6' %>
-    <%= f.text_field :due , :placeholder => 'Due Date', :id => 'dueDate', :class => 'span2' %> <%= f.submit  %></p>
-
+    <%= f.select :category_id, options_from_collection_for_select(current_user.categories, :id, :name), :class => 'span3' %>
+    
+    <%= f.text_field :due , :placeholder => 'Due Date', :id => 'dueDate', :class => 'span3' %> 
+    <%= f.submit  %></p>
 
 <% end %>
 

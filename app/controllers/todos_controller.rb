@@ -4,8 +4,13 @@ class TodosController < ApplicationController
   # GET /todos.json
   def index
     #@todos = Todo.all
-    @todos = current_user.todos
+
+    @todos = current_user.todos.paginate(page: params[:page], per_page: 5)
+
+    #@todos = current_user.todos
     @todo = current_user.todos.new
+
+    @categories = current_user.categories
 
 
     respond_to do |format|
@@ -30,7 +35,9 @@ class TodosController < ApplicationController
   # GET /todos/new.json
   def new
     #@todo = Todo.new
-    @todo = current_user.todos.create
+    @todo = current_user.todos.new(params[:todo])
+    @categories = current_user.categories
+
 
     respond_to do |format|
       format.html # new.html.erb
@@ -50,6 +57,8 @@ class TodosController < ApplicationController
     #@todo = Todo.new(params[:todo])
     #@todo = current_user.todos.create(params[:todo])
     @todo = current_user.todos.new(params[:todo])
+    @categories = current_user.categories
+
 
     respond_to do |format|
       if @todo.save
