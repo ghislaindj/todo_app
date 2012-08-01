@@ -1,17 +1,50 @@
-<%= content_tag_for(:tr, todo) do %>
-	<% if todo.category_id? %>
-        <td><%= todo.category.name %></td>
-    <% else %>
-    	<td>Others</td>
+
+<% if !todo.due.future? && todo.done == false %>
+    <%= content_tag_for(:tr, todo, :class => "late") do %>
+
+        <td><input type="checkbox" value="<%= todo.id %>" id="todo_checkbox"class="delete_box"></td>
+
+        <% if todo.category? %>
+                <td id="todo_category_<%= todo.id %>" class="editable"><%= todo.category %></td>
+        <% else %>
+                <td id="todo_category_<%= todo.id %>" class="editable">Others</td>
+        <% end %>
+        <% if todo.done? %>
+            <td id="todo_body_<%= todo.id %>" class="editable done"><%= todo.body %></td>
+        <% else %>
+            <td id="todo_body_<%= todo.id %>" class="editable"><%= todo.body %></td>
+        <% end %>
+         <td id="todo_due_<%= todo.id %>" class="date_editable"><%= todo.due %></td>
+           <td id="todo_done_<%= todo.id %>" class="done_editable"> <%= todo.done %></td>
+
+        <td>
+              <%= link_to '<i class="icon-ok-sign"></i>'.html_safe, done_path(todo), :remote => true, :id => "#{todo.id}" %>
+            <%= link_to '<i class="icon-remove-sign"></i>'.html_safe, todo, method: :delete, data: { confirm: 'Are you sure?' }, :remote => true %>
+        </td>
     <% end %>
-    <td><%= todo.body %></td>
-    <td><%= todo.due %></td>
-    <td><%= todo.done %></td>
-    <% if todo.done? %>
-        <td><input type="checkbox" checked/></td>
-    <% else %>
-    	<td><input type="checkbox"/></td>
+<% else %>
+    <%= content_tag_for(:tr, todo) do %>
+
+        <td><input type="checkbox" value="<%= todo.id %>" id="todo_checkbox"class="delete_box"></td>
+
+        <% if todo.category? %>
+                <td id="todo_category_<%= todo.id %>" class="editable"><%= todo.category %></td>
+        <% else %>
+                <td id="todo_category_<%= todo.id %>" class="editable">Others</td>
+        <% end %>
+        <% if todo.done? %>
+            <td id="todo_body_<%= todo.id %>" class="editable done"><%= todo.body %></td>
+        <% else %>
+            <td id="todo_body_<%= todo.id %>" class="editable"><%= todo.body %></td>
+        <% end %>
+         <td id="todo_due_<%= todo.id %>" class="date_editable"><%= todo.due %></td>
+           <td id="todo_done_<%= todo.id %>" class="done_editable"> <%= todo.done %></td>
+
+
+        <td>
+              <%= link_to '<i class="icon-ok-sign"></i>'.html_safe, done_path(todo), :remote => true, :id => "#{todo.id}" %>
+            <%= link_to '<i class="icon-remove-sign"></i>'.html_safe, todo, method: :delete, data: { confirm: 'Are you sure?' }, :remote => true %>
+        </td>
     <% end %>
-    <td><%= link_to 'Destroy', todo, method: :delete, data: { confirm: 'Are you sure?' }, :remote => true %></td>
 <% end %>
 

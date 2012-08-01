@@ -1,9 +1,8 @@
 class Todo < ActiveRecord::Base
-  attr_accessible :body, :done, :due, :title, :category_id
+  attr_accessible :body, :done, :due, :category
   after_initialize :default_values
 
   belongs_to :user
-  belongs_to :category
 
   validates :body, presence: true
   

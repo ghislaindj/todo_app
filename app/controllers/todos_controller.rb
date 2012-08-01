@@ -1,23 +1,62 @@
 class TodosController < ApplicationController
   before_filter :login_required
+
+  require 'will_paginate/array'
+
+
   # GET /todos
   # GET /todos.json
   def index
-    #@todos = Todo.all
+    @mycategories = []
+      current_user.todos.group(:category).count.each_pair do |c, n|
+        @mycategories << c
+      end
 
-    @todos = current_user.todos.paginate(page: params[:page], per_page: 5)
 
-    #@todos = current_user.todos
+
+    if params[:sort]
+          @todos = current_user.todos.order("#{params[:sort]}").paginate(page: params[:page], per_page: 5)
+
+    else 
+      if params[:search]
+        @todos = current_user.todos.find(:all,:conditions => ['body LIKE ?', "%#{params[:search]}%"]).paginate(page: params[:page], per_page: 5)
+
+      else
+        if params[:category]
+        @todos = current_user.todos.where(:category => params[:category]).paginate(page: params[:page], per_page: 5)
+
+        else
+          @todos = current_user.todos.paginate(page: params[:page], per_page: 5)
+        end
+      end
+    end
+
     @todo = current_user.todos.new
-
-    @categories = current_user.categories
+    @late_todos= current_user.todos.where(:done => false).where("due <= ?", Date.today).count
 
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @todos }
+      format.json { render :json => @categories.to_json}
+      format.js
     end
+
   end
+
+  def search
+      @todos = current_user.todos.find(:all,:conditions => ['body LIKE ?', "%#{params[:search]}%"]).paginate(page: params[:page], per_page: 5)
+
+      @todo = current_user.todos.new
+
+
+      respond_to do |format|
+        format.html
+        format.json
+      end
+
+  end
+
+
 
   # GET /todos/1
   # GET /todos/1.json
@@ -36,13 +75,29 @@ class TodosController < ApplicationController
   def new
     #@todo = Todo.new
     @todo = current_user.todos.new(params[:todo])
-    @categories = current_user.categories
+    #autocomplete request
+    #@categories = Todo.select(:category)
+
 
 
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @todo }
+      format.js
+
     end
+  end
+
+  def cat
+
+    @categories = current_user.todos.find(:all,:conditions => ['category LIKE ?', "#{params[:term]}%"])
+
+    respond_to do |format|
+      format.json { render :json => @categories.to_json}
+      format.js
+
+    end
+
   end
 
   # GET /todos/1/edit
@@ -57,7 +112,6 @@ class TodosController < ApplicationController
     #@todo = Todo.new(params[:todo])
     #@todo = current_user.todos.create(params[:todo])
     @todo = current_user.todos.new(params[:todo])
-    @categories = current_user.categories
 
 
     respond_to do |format|
@@ -82,6 +136,7 @@ class TodosController < ApplicationController
       if @todo.update_attributes(params[:todo])
         format.html { redirect_to @todo, notice: 'Todo was successfully updated.' }
         format.json { head :no_content }
+
       else
         format.html { render action: "edit" }
         format.json { render json: @todo.errors, status: :unprocessable_entity }
@@ -102,6 +157,34 @@ class TodosController < ApplicationController
       format.js
     end
   end
+
+  def multiple_destroy
+    params[:id].each do |id|
+        todo = current_user.todos.find_by_id(id)
+        todo.destroy
+    end
+    respond_to do |format|
+       format.html { redirect_to todos_url }
+      format.json { head :no_content }
+        format.js
+    end
+  end
+
+def done
+    @todo = current_user.todos.find(params[:id])
+    value = @todo.done ? 0 : 1
+    respond_to do |format|
+      if @todo.update_attributes(:done => value)
+         format.json { render json: @todos }
+         format.js {
+            @todos = current_user.todos.paginate(page: params[:page], per_page: 5)
+            render action: "index"
+         }
+      end
+    end
+  end
+
+
 
   private
 

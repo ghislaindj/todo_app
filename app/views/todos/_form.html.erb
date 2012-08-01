@@ -14,10 +14,9 @@
 
   <p>
     <%= f.text_field :body, :placeholder => 'Task', :class => 'span6' %>
-    <%= f.select :category_id, options_from_collection_for_select(current_user.categories, :id, :name), :class => 'span3' %>
-    
+    <%= f.text_field :category, :placeholder => 'Category', :class => 'span3', :id => 'category_form' %>
     <%= f.text_field :due , :placeholder => 'Due Date', :id => 'dueDate', :class => 'span3' %> 
+    <br><br><br>
     <%= f.submit  %></p>
 
 <% end %>
-

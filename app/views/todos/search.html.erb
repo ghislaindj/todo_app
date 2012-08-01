@@ -1,0 +1,67 @@
+<h1>Todo List</h1>
+<br><br><br>
+<div>
+	<span>
+		<a class="btn" data-toggle="modal" href="#myModal" >Add a new task</a>
+	</span>
+
+	<span>
+		<div class="modal hide" id="myModal">
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal">×</button>
+		    <h3>Add a new Task</h3>
+		  </div>
+		  <div class="modal-body">
+			    <div id="todo_form" class="hidden">
+			  		<%= render 'form' %>
+				</div>
+		  </div>
+		</div>
+	</span>
+	<span id="search-box">
+		
+
+			<%= form_tag( {:controller => "todos", :action => "search"} , :class => 'form-inline'  )  do %>
+  				<%= text_field_tag :search, nil, :class => 'span3' %>
+  				<%= submit_tag 'Search' %>
+			<% end -%>
+	</span>
+</div>
+<div>
+	<span>
+		Search results for : <%= params[:search] %>
+	</span>
+	<span>
+		<%= link_to '<i class="icon-remove"></i> Clear Search results'.html_safe , :action => "index" %>
+	</span>
+
+
+</div>
+<br>
+
+<br><br>
+ 
+<table class="table table-striped" id="todos">
+<thead>
+    <th> Category 
+    	<%= link_to '<i class="icon-chevron-up"></i>'.html_safe , :sort => "category ASC" %>
+    	<%= link_to '<i class="icon-chevron-down"></i>'.html_safe , :sort => "category DESC" %>
+    </th>
+    <th>Task
+    	<%= link_to '<i class="icon-chevron-up"></i>'.html_safe , :sort => "body ASC" %>
+    	<%= link_to '<i class="icon-chevron-down"></i>'.html_safe , :sort => "body DESC" %>
+    </th>
+    <th>Due Date
+    	<%= link_to '<i class="icon-chevron-up"></i>'.html_safe , :sort => "due ASC" %>
+    	<%= link_to '<i class="icon-chevron-down"></i>'.html_safe , :sort => "due DESC" %>
+    </th>
+    <th>Is it done ?
+        <%= link_to '<i class="icon-chevron-up"></i>'.html_safe , :sort => "done ASC" %>
+    	<%= link_to '<i class="icon-chevron-down"></i>'.html_safe , :sort => "done DESC" %>	
+    </th>
+ </thead>
+ <tbody>
+<%= render :partial => @todos %>
+</tbody>
+</table>
+<%= will_paginate %>

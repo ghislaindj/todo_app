@@ -1,19 +1,28 @@
 TestApp::Application.routes.draw do
+
   resources :categories
-
   resources :sessions
-
   resources :users
-
-  resources :todos, :posts
-
+  resources :todos do 
+    delete 'delete' => 'todos#multiple_destroy', :on => :collection
+  end
   root to: 'todos#index'
+
 
   match 'user/edit' => 'users#edit', :as => :edit_current_user
   match 'signup' => 'users#new', :as => :signup
   match 'logout' => 'sessions#destroy', :as => :logout
   match 'login' => 'sessions#new', :as => :login
-  match 'todolist' => 'todos#index'
+  match 'mycategories' => 'todos#cat'
+  match 'ajax/editable' => 'ajax#editable'
+  match 'ajax/done' => 'ajax#done'
+  match 'todos/search' => 'todos#search'
+
+  match 'todos/update' => 'todos#update'
+  match 'todos/:id/done' => 'todos#done', :as => :done
+
+
+
 
 
 

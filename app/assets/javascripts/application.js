@@ -11,7 +11,10 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require jquery-ui
 //= require jquery_ujs
 //= require bootstrap
 //= require bootstrap-datepicker
+//= require jquery.jeditable.mini.js
+//= require jquery.jeditable.datepicker.js
 //= require_tree .

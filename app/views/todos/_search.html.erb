@@ -1,0 +1,25 @@
+<span id="search-box" class="btn-group pull-right">
+
+			<div id="filter_categories" class="btn-group span2 pull-right">
+				<a class="btn dropdown-toggle" data-toggle="dropdown" href="#menu1">
+					Filter Categories
+					<b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu">
+					<li>
+						<%= link_to "All categories", root_url %>
+					</li>
+					<% @mycategories.each do |category| %>
+
+					<li>
+						<%= link_to category , :category => "#{category}" %>
+					</li>
+					<% end %>
+				</ul>
+			</div>
+
+			<%= form_tag( {:controller => "todos", :action => "search"} , :class => 'form-inline'  )  do %>
+  				<%= text_field_tag :search, nil, :class => 'span3' %>
+  				<%= submit_tag 'Search' %>
+			<% end %>
+	</span>
