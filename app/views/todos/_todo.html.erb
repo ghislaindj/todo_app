@@ -15,7 +15,7 @@
             <td id="todo_body_<%= todo.id %>" class="editable"><%= todo.body %></td>
         <% end %>
          <td id="todo_due_<%= todo.id %>" class="date_editable"><%= todo.due %></td>
-           <td id="todo_done_<%= todo.id %>" class="done_editable"> <%= todo.done %></td>
+           <td id="todo_done_<%= todo.id %>"> <%= todo.done %></td>
 
         <td>
               <%= link_to '<i class="icon-ok-sign"></i>'.html_safe, done_path(todo), :remote => true, :id => "#{todo.id}" %>
@@ -38,7 +38,7 @@
             <td id="todo_body_<%= todo.id %>" class="editable"><%= todo.body %></td>
         <% end %>
          <td id="todo_due_<%= todo.id %>" class="date_editable"><%= todo.due %></td>
-           <td id="todo_done_<%= todo.id %>" class="done_editable"> <%= todo.done %></td>
+           <td id="todo_done_<%= todo.id %>" > <%= todo.done %></td>
 
 
         <td>

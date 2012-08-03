@@ -1,6 +1,6 @@
 <span id="search-box" class="btn-group pull-right">
 
-			<div id="filter_categories" class="btn-group span2">
+			<div id="filter_categories" class="btn-group span2 ">
 				<a class="btn dropdown-toggle" data-toggle="dropdown" href="#menu1">
 					Filter Categories
 					<b class="caret"></b>
@@ -17,10 +17,10 @@
 					<% end %>
 				</ul>
 			</div>
-			<div id="filter_categories" class="btn-group span2">
+			<div class="btn offset1">
 
 			<%= form_tag( {:controller => "todos", :action => "search"} , :class => 'form-inline'  )  do %>
-  				<%= text_field_tag :search, nil, :class => 'span3' %>
+  				<%= text_field_tag :search, nil, :class => 'span2' %>
   				<%= submit_tag 'Search' %>
 			<% end %>
 
