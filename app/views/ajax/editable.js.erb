@@ -1,0 +1,6 @@
+$('#todos').prepend('<%= escape_javascript(render(@todo)) %>');
+
+
+$('#todo_table').replaceWith('<%= escape_javascript(render :partial => @todos ) %>');
+console.log('editable.js');
+

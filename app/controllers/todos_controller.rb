@@ -39,6 +39,7 @@ class TodosController < ApplicationController
       format.html # index.html.erb
       format.json { render :json => @categories.to_json}
       format.js
+      format.rss { render :layout => false } #index.rss.builder
     end
 
   end
@@ -90,7 +91,7 @@ class TodosController < ApplicationController
 
   def cat
 
-    @categories = current_user.todos.find(:all,:conditions => ['category LIKE ?', "#{params[:term]}%"])
+    @categories = current_user.todos.find(:all,:conditions => ['category LIKE ?', "#{params[:term]}%"]).uniq
 
     respond_to do |format|
       format.json { render :json => @categories.to_json}
@@ -164,9 +165,9 @@ class TodosController < ApplicationController
         todo.destroy
     end
     respond_to do |format|
-       format.html { redirect_to todos_url }
-      format.json { head :no_content }
-        format.js
+        format.js {
+            @todos = current_user.todos.paginate(page: params[:page], per_page: 5)
+         }
     end
   end
 
@@ -178,10 +179,23 @@ def done
          format.json { render json: @todos }
          format.js {
             @todos = current_user.todos.paginate(page: params[:page], per_page: 5)
-            render action: "index"
          }
       end
     end
+  end
+
+  def feed
+      @title = "Todo Manager title"
+      # the news items
+      @todos = current_user.todos.order("updated_at desc")
+
+      # this will be our Feed's update timestamp
+      @updated = @todos.first.updated_at unless @todos.empty?
+
+      respond_to do |format|
+        format.atom { render :layout => false }
+        format.rss { redirect_to feed_path(:format => :atom), :status => :moved_permanently }
+      end
   end
 
 

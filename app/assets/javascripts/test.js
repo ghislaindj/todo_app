@@ -30,28 +30,8 @@ $(document).ready(function() {
      });
 
 
-
 	$("#category_form").autocomplete({
-		source: '/mycategories.json',
-		dataType: 'json',
-		parse: function(data) {
-			console.log("bla");
-        var parsed = [];
-        for (var i = 0; i < data.length; i++) {
-            parsed[parsed.length] = {
-                data: data[i],
-                value: data[i].category,
-                result: data[i].category
-            };
-        }
- 
-        return parsed;
-	    },
-	    formatItem: function(item) {
-	    	console.log("formatitem");
-	        return item.category;
-	    }
-
+		source: availableCategories
     });
 
 

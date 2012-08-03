@@ -1,4 +1,8 @@
 <% title "Todo manager" %>
+<script>
+var availableCategories = <%= raw @mycategories %>;
+console.log("availableCategories");
+</script>
 <div class="well">
 	<h1>Todo List</h1>
 	<h2>Welcome <%= current_user.username %>, you have <%= @late_todos %> tasks for today</h2>
@@ -47,7 +51,7 @@
 	    	<%= link_to '<i class="icon-chevron-down"></i>'.html_safe , :sort => "done DESC" %>	
 	    </th>
 	 </thead>
-	 <tbody>
+	 <tbody id="todo_table">
 	<%= render :partial => @todos %>
 	</tbody>
 	</table>

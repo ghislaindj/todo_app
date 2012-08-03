@@ -7,19 +7,12 @@ def editable
     result = object.update_attribute attribute, params[:value]
     
     respond_to do |format|
-      format.js { render :json => params[:value] }
+      format.js { render :json => params[:value] 
+                  @todos = current_user.todos.paginate(page: params[:page], per_page: 5)
+                }
     end
   end
 
-def done
-	@todo = current_user.todos.find_by_id(params[:id])
-	@todo.done = true
-	@todo.save
-	
-	respond_to do |format|
-      format.js { render :json => :done }
-    end
-end
 
 
 end

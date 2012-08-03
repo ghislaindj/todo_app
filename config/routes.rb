@@ -3,10 +3,15 @@ TestApp::Application.routes.draw do
   resources :categories
   resources :sessions
   resources :users
+  resources :todos_items
   resources :todos do 
     delete 'delete' => 'todos#multiple_destroy', :on => :collection
   end
   root to: 'todos#index'
+
+  match '/feed' => 'todos#feed',
+      :as => :feed,
+      :defaults => { :format => 'atom' }
 
 
   match 'user/edit' => 'users#edit', :as => :edit_current_user
