@@ -22,7 +22,7 @@ $(document).ready(function() {
   		}
      });
 
-	$('.done_editable').editable('/ajax/editable', {
+	$('.done_editable').editable('/ajax/editable', {	
        submit : 'OK',
        cancel : 'cancel',
       	data   : " {false:'Not done', true:'Done'}",
@@ -47,6 +47,20 @@ $(document).ready(function() {
             data: data,
         })
     });
+
+    $("tr.todo").each(function() {
+  		$this = $(this)
+  		var date = $this.find("td.date_editable").html();
+  		var done = $this.find("td.done_editable").html();
+  		if(done == true){
+  			$this.css("color:red");
+  		}
+  		else {
+  			$this.css("color:red");
+
+  		}
+
+});
 
 
 

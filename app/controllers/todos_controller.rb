@@ -7,16 +7,10 @@ class TodosController < ApplicationController
   # GET /todos
   # GET /todos.json
   def index
-    @mycategories = []
-      current_user.todos.group(:category).count.each_pair do |c, n|
-        @mycategories << c
-      end
 
-
-
+    # trie les todos
     if params[:sort]
           @todos = current_user.todos.order("#{params[:sort]}").paginate(page: params[:page], per_page: 5)
-
     else 
       if params[:search]
         @todos = current_user.todos.find(:all,:conditions => ['body LIKE ?', "%#{params[:search]}%"]).paginate(page: params[:page], per_page: 5)
@@ -32,8 +26,14 @@ class TodosController < ApplicationController
     end
 
     @todo = current_user.todos.new
+    #taches en retard
     @late_todos= current_user.todos.where(:done => false).where("due <= ?", Date.today).count
 
+    # cree les categories que j'ai
+    @mycategories = []
+      current_user.todos.group(:category).count.each_pair do |c, n|
+        @mycategories << c
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -43,6 +43,7 @@ class TodosController < ApplicationController
     end
 
   end
+
 
   def search
       @todos = current_user.todos.find(:all,:conditions => ['body LIKE ?', "%#{params[:search]}%"]).paginate(page: params[:page], per_page: 5)
@@ -57,12 +58,9 @@ class TodosController < ApplicationController
 
   end
 
-
-
   # GET /todos/1
   # GET /todos/1.json
   def show
-    #@todo = Todo.find(params[:id])
     @todo = current_user.todos.find(params[:id])
 
     respond_to do |format|
@@ -74,12 +72,7 @@ class TodosController < ApplicationController
   # GET /todos/new
   # GET /todos/new.json
   def new
-    #@todo = Todo.new
     @todo = current_user.todos.new(params[:todo])
-    #autocomplete request
-    #@categories = Todo.select(:category)
-
-
 
     respond_to do |format|
       format.html # new.html.erb
@@ -87,18 +80,6 @@ class TodosController < ApplicationController
       format.js
 
     end
-  end
-
-  def cat
-
-    @categories = current_user.todos.find(:all,:conditions => ['category LIKE ?', "#{params[:term]}%"]).uniq
-
-    respond_to do |format|
-      format.json { render :json => @categories.to_json}
-      format.js
-
-    end
-
   end
 
   # GET /todos/1/edit
